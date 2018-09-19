@@ -27,4 +27,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    // User has many post relationship also we need inversion relationship in Post modal
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
