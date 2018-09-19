@@ -57156,7 +57156,8 @@ var App = function (_Component) {
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
         _this.state = {
-            body: ''
+            body: '',
+            posts: []
             // bind we only need to bind the event handler functions
         };_this.handleSubmit = _this.handleSubmit.bind(_this);
         _this.handleChange = _this.handleChange.bind(_this);
@@ -57166,22 +57167,35 @@ var App = function (_Component) {
     _createClass(App, [{
         key: 'handleSubmit',
         value: function handleSubmit(e) {
+            var _this2 = this;
+
             e.preventDefault();
-            this.postData();
-            console.log(this.state.body);
+            // this.postData()
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/posts', {
+                body: this.state.body
+            }).then(function (response) {
+                console.log(response);
+                _this2.setState({
+                    posts: [response.data]
+                });
+            });
+            // clear the textarea
+            this.setState({
+                body: ''
+            });
         }
+
+        // postData(){
+        //     axios.post('/posts',{
+        //         body: this.state.body
+        //     })
+        // }
+
     }, {
         key: 'handleChange',
         value: function handleChange(e) {
             this.setState({
                 body: e.target.value
-            });
-        }
-    }, {
-        key: 'postData',
-        value: function postData() {
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/posts', {
-                body: this.state.body
             });
         }
     }, {
@@ -57217,6 +57231,7 @@ var App = function (_Component) {
                                             className: 'form-control',
                                             rows: '5', maxLength: '140',
                                             placeholder: 'What\'s up?',
+                                            value: this.state.body,
                                             required: true })
                                     ),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'submit', value: 'Post', className: 'form-control' })
@@ -57233,12 +57248,18 @@ var App = function (_Component) {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
                                 { className: 'card-header' },
-                                'App Component! '
+                                'Recent Tweets '
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
                                 { className: 'card-body' },
-                                'I\'m an App component!'
+                                this.state.posts.map(function (post) {
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'div',
+                                        { key: post.id },
+                                        post.body
+                                    );
+                                })
                             )
                         )
                     )
