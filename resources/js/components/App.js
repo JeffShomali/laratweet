@@ -20,9 +20,9 @@ class App extends Component {
         axios.post('/posts', {
             body: this.state.body,
         }).then(response => {
-            console.log(response)
+            // console.log(response)
             this.setState({
-                posts: [response.data]
+                posts: [...this.state.posts, response.data]
             })
         })
         // clear the textarea
