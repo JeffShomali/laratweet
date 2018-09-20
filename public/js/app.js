@@ -57176,7 +57176,7 @@ var App = function (_Component) {
             __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/posts', {
                 body: this.state.body
             }).then(function (response) {
-                // console.log(response)
+                console.log(response);
                 _this2.setState({
                     posts: [].concat(_toConsumableArray(_this2.state.posts), [response.data])
                 });
@@ -57258,8 +57258,34 @@ var App = function (_Component) {
                                 this.state.posts.map(function (post) {
                                     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'div',
-                                        { key: post.id },
-                                        post.body
+                                        { key: post.id, className: 'media' },
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'div',
+                                            { className: 'media-left' },
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: post.user.avatar, className: 'media-object mr-2 ' })
+                                        ),
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'div',
+                                            { className: 'media-body' },
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'div',
+                                                { className: 'user' },
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    'a',
+                                                    { href: '/users/' + post.user.username },
+                                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                        'b',
+                                                        null,
+                                                        post.user.username
+                                                    )
+                                                )
+                                            ),
+                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'p',
+                                                null,
+                                                post.body
+                                            )
+                                        )
                                     );
                                 })
                             )

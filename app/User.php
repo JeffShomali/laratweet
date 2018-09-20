@@ -28,9 +28,25 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends = ['avatar']; // ?
+
     // User has many post relationship also we need inversion relationship in Post modal
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function getAvatar()
+    {
+        return 'https://gravatar.com/avatar/'. md5($this->email). '/?s=45&=mm';
+    }
+
+    public function getAvatarAttribute() // ?
+    {
+        return $this->getAvatar();
+    }
+    public function getRouteKeyName()
+    {
+        return 'username';
     }
 }

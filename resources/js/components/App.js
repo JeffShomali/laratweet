@@ -20,7 +20,7 @@ class App extends Component {
         axios.post('/posts', {
             body: this.state.body,
         }).then(response => {
-            // console.log(response)
+            console.log(response)
             this.setState({
                 posts: [...this.state.posts, response.data]
             })
@@ -75,9 +75,19 @@ class App extends Component {
                             <div className="card-header">Recent Tweets </div>
 
                             <div className="card-body">
-                                {
-                                    this.state.posts.map(post => <div key={post.id}>{post.body}</div>)
-                                }
+                                {this.state.posts.map(post =>
+                                    <div key={post.id} className="media">
+                                            <div className="media-left">
+                                                <img src={post.user.avatar} className="media-object mr-2 "/>
+                                            </div>
+                                            <div className="media-body">
+                                                <div className="user">
+                                                    <a href={`/users/${post.user.username}`}><b>{post.user.username}</b></a>
+                                                </div>
+                                                <p>{post.body}</p>
+                                            </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
