@@ -11,4 +11,12 @@ class UserController extends Controller
     {
         return view('users.index', compact('user'));
     }
+
+    public function follow(Request $request, User $user)
+    {
+        if ($request->user()->canFollow($user)) {
+            $request->user()->following()->attach($user->id);
+        }
+        return redirect()->back();
+    }
 }
