@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\User', 'follows', 'user_id', 'follower_id');
     }
+
+    public function followers()
+    {
+        return $this->belongsToMany('App\User', 'follows', 'follower_id', 'user_id'); // get list of all followers
+    }
 }
