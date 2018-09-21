@@ -49,4 +49,29 @@ class User extends Authenticatable
     {
         return 'username';
     }
+
+    // Check to see is not firing himself/herself
+    public function isNotTheUser(User $user)
+    {
+        return $this->id !== $user->id;
+    }
+
+    // Check if we already following
+    public function isFollowing(User $user)
+    {
+        return (bool) $this->following->where('id', $user->id)->count();
+    }
+
+    public function canFollow(User $user)
+    {
+        if ($this->isNotTheUser($user)) {
+            return false;
+        }
+        return !$this->isFollowing($user); // check if are not already folowing the user | if not following return TRUE otherwise FALSE
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany('App\User', 'follows', 'user_id', 'follower_id');
+    }
 }
