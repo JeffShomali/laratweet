@@ -70,6 +70,12 @@ class User extends Authenticatable
         return !$this->isFollowing($user); // check if are not already folowing the user | if not following return TRUE otherwise FALSE
     }
 
+    public function canUnfollow(User $user)
+    {
+        // if is following the trget user
+        return $this->isFollowing($user);
+    }
+
     public function following()
     {
         return $this->belongsToMany('App\User', 'follows', 'user_id', 'follower_id');

@@ -7,7 +7,7 @@
     <hr>
     @if(Auth::user()->isNotTheUser($user))
         @if(Auth::user()->isFollowing($user))
-                <a href="#"> Unfollow </a>
+                <a href="{{Route('users.unfollow', $user)}}"> Unfollow </a>
         @else
                 <a href={{ Route('users.follow', $user) }}> Follow </a>
         @endif
