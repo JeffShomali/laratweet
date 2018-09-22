@@ -19,7 +19,7 @@ class App extends Component {
     getPosts(){
         this.setState({loading: true})
         axios.get('/posts').then(response => {
-            console.log(response.data.posts)
+            // console.log(response.data.posts)
             this.setState( {
                 posts: [...response.data.posts],
                 loading: false
@@ -32,13 +32,23 @@ class App extends Component {
         this.getPosts();
     }
 
+    componentDidMount () {
+      Echo.private('new-post').listen('PostCreated', (e) => {
+        //   console.log("from pusher", e.post)
+        if (window.Laravel.user.following.includes(e.post.user_id)) {
+            this.setState({posts: [e.post, ...this.state.posts]});
+        }
+      })
+    }
+
+
     handleSubmit(e){
         e.preventDefault()
         // this.postData()
         axios.post('/posts', {
             body: this.state.body,
         }).then(response => {
-            console.log(response)
+            // console.log(response)
             this.setState({
                 posts: [...this.state.posts, response.data]
             })
@@ -82,7 +92,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid">
                 <div className="row justify-content-center">
                     <div className="col-md-6">
                         <div className="card">
